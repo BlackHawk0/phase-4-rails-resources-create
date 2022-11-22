@@ -1,5 +1,8 @@
 class BirdsController < ApplicationController
 
+  wrap_parameters format: []
+  
+
   # GET /birds
   def index
     birds = Bird.all
@@ -16,4 +19,15 @@ class BirdsController < ApplicationController
     end
   end
 
+  def create
+    # dynamic way
+    render json: Bird.create(birds_params), status: :created
+    # rigid way
+    # render json: Bird.create(name: params[:name], species: params[:species]), status: :created
+  end
+
+  private
+  def birds_params
+    params.permit(:name, :species)
+  end
 end
